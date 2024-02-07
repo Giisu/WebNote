@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="kor">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./data.js"></script>
+
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      .window {
+        display: flex;
+        flex-direction: row;
+        border: 2px solid black;
+        width: 100%;
+      }
+
+      .sidebar {
+        display: flex;
+        flex: 20%;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        background-color: red;
+      }
+
+      .main {
+        display: flex;
+        flex: 80%;
+        flex-direction: row;
+      }
+
+      .description {
+        display: flex;
+        flex: 70%;
+        flex-direction: column;
+        background-color: aqua;
+      }
+
+      .example {
+        display: flex;
+        flex: 30%;
+        flex-direction: column;
+        background-color: white;
+        padding: 5px;
+      }
+
+      .checkbox {
+        width: 100%;
+        text-align: left;
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      let data = [
+        {
+          name: "h tags",
+          gram: "<h1>CONTENTS</h1>, <h2>CONTENTS</h2> ``` ",
+          desc: "머릿말에 해당하는 태그. 숫자가 클수록 글자크기는 작음",
+          property: "color, background-color, text-align, text-decoration ```",
+          sample: "",
+          link: "https://h1",
+        },
+        {
+          name: "p",
+          gram: "<p></p>",
+          desc: "Paragraph, 즉 문장.",
+          property: "hidden, lang, draggable, spellcheck, contenteditable ```",
+          sample: "<p spellcheck=bool contenteditable=bool ```",
+          link: "https://h1",
+        },
+        {
+          name: "br",
+          gram: "<br />",
+          desc: "줄바꿈",
+          property: "",
+          sample: "",
+          link: "https://h1",
+        },
+        {
+          name: "label",
+          gram: "<label> </label>",
+          desc: "p와 유사하지만 for속성을 통해 연결성을 보다 직관적으로",
+          property: "for",
+          sample: "<label for=ID> </label>",
+          link: "https://h1",
+        },
+        {
+          name: "input",
+          gram: "<input type=type> </input>",
+          desc: "사용자로부터 값을 입력받을 수 있음",
+          property: "type, id, name ```",
+          sample: "<input type=text@button; name=inputtt; id=input list=id>",
+          link: "https://h1",
+        },
+        {
+          name: "datalist",
+          gram: "<datalist id=tag></datalist>",
+          desc: "option태그를 자식요소로 추가함으로서 list화 할 수 있고, 이를 input요소의 reference로서 사용할 수 있다.",
+          property: "type, id, name ```",
+          sample:
+            "<input list=tag /> <datalist id=tag></datalist> <option value=val></option>",
+          link: "https://h1",
+          pairtag: "<option>, <input>",
+        },
+        {
+          name: "a",
+          gram: "<a href=address target=target></a>",
+          desc: "click이벤트로 href값에 해당하는 address로 이동할 수 있다.",
+          property: "지역속성 target. ",
+          sample: "",
+          link: "https://h1",
+          pairtag: "",
+        },
+      ];
+    </script>
+    <div class="window">
+      <main class="sidebar">
+        <section style="display: flex">
+          <input
+            list="tag"
+            id="search"
+            style="flex: 70%"
+            onfocus="this.value=''"
+          />
+          <datalist id="tag"></datalist>
+          <script>
+            let names = [];
+            const searchbar = document.getElementById("search");
+            const searchBtn = document.getElementById("searchBtn");
+            let list = document.getElementById("tag");
+            for (let i = 0; i < data.length; i++) {
+              let dataForname;
+              dataForname = data[i].name;
+              names.push(dataForname);
+              let option = document.createElement("option");
+              option.value = dataForname;
+              option.textContent = option.value;
+              list.appendChild(option);
+            }
+            // names.forEach((name) => list.appendChild(new Option("", name)));
+            // ---정상동작---
+          </script>
+          <button style="flex: 30%" id="searchBtn" onclick="loadingMain()">
+            검색
+          </button>
+        </section>
+        <section class="checkbox">
+          <input id="chk_html" ; type="checkbox" />
+          <label for="chk_html">HTML</label>
+        </section>
+        <section class="checkbox">
+          <input id="chk_css" ; type="checkbox" />
+          <label for="chk_css">CSS</label>
+        </section>
+        <section class="checkbox">
+          <input id="chk_js" ; type="checkbox" />
+          <label for="chk_js">JS</label>
+        </section>
+      </main>
+      <main class="main">
+        <section class="description" style="flex: 70%; width: 100%">
+          <h1 id="keyName">검색한 요소</h1>
+          <h3 id="gram">문법</h3>
+          <p id="explain">설명</p>
+          <a href="javascript:void(0);" class="display" id="property"
+            >프로퍼티</a
+          >
+          <a href="javascript:void(0);" class="display" id="sample">예제</a>
+          <a href="javascript:void(0);" class="display" id="externalLink"
+            >외부링크</a
+          >
+        </section>
+        <section
+          style="display: flex; flex-direction: column; flex: 30%; width: 100%"
+        >
+          <iframe
+            src="./calculator.html"
+            frameborder="0"
+            class="example"
+            id="iframe"
+            style="flex: 50%"
+          ></iframe>
+          <div id="popUpDescription" style="flex: 50%">
+            예제 들어갈 곳 예제 들어갈 곳 예제 들어갈 곳
+          </div>
+        </section>
+      </main>
+    </div>
+    <script>
+      let searchInput;
+      let target;
+      let clicked;
+      const $keyname = document.getElementById("keyName");
+      const $gram = document.getElementById("gram");
+      const $link = document.getElementsByClassName("display");
+      const $example = document.getElementById("popUpDescription");
+      const $iframe = document.getElementById("iframe");
+      const $explain = document.getElementById("explain");
+      const onClick = (event) => {
+        clicked = event.target.id;
+        loadingSide(clicked);
+      };
+      for (let i = 0; i < $link.length; i++) {
+        $link[i].addEventListener("click", onClick);
+      }
+      //   $keyname.textContent = $h1.name;
+
+      function loadingSide(clicked) {
+        switch (clicked) {
+          case "property":
+            popUpProperty();
+            break;
+          case "sample":
+            popUpSample();
+            break;
+          case "externalLink":
+            popUpExternalLink();
+            break;
+        }
+      }
+      function popUpProperty() {
+        $iframe.style.display = "none";
+        $example.style.display = "block";
+
+        $example.textContent = target.property;
+      }
+      function popUpSample() {
+        $iframe.style.display = "none";
+        $example.style.display = "block";
+        $example.textContent = target.sample;
+      }
+      function popUpExternalLink() {
+        $example.style.display = "none";
+        $iframe.style.display = "block";
+      }
+      function loadingMain() {
+        $keyname.textContent = target.name;
+        $gram.textContent = target.gram;
+        $explain.textContent = target.desc;
+      }
+      const onInput = (event) => {
+        searchInput = event.target.value;
+        console.log(searchInput);
+        target = data.find((target) => target.name === searchInput);
+      };
+
+      searchbar.addEventListener("input", onInput);
+    </script>
+  </body>
+</html>
